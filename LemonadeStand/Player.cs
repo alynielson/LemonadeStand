@@ -10,7 +10,7 @@ namespace LemonadeStand
     {
         private int totalMoney;
         private int popularity;
-        private int name;
+        private string name;
         Inventory lemons;
         Inventory ice;
         Inventory cups;
@@ -24,6 +24,17 @@ namespace LemonadeStand
             ice = new Inventory();
             cups = new Inventory();
             sugar = new Inventory();
+        }
+
+        private void GetPlayerName(string playerNumber)
+        {
+            Console.WriteLine($"{playerNumber}, what is your name?");
+            name = Console.ReadLine();
+            if (name.Length == 0)
+            {
+                Console.WriteLine("You didn't enter anything! Try again.");
+                GetPlayerName(playerNumber);
+            }
         }
     }
 }
