@@ -8,5 +8,11 @@ namespace LemonadeStand
 {
     class Inventory
     {
+        private int quantity;
+
+        public Inventory()
+        {
+            quantity = 0;
+        }
     }
 }
