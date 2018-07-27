@@ -9,9 +9,7 @@ namespace LemonadeStand
     class Game
     {
         private int numberOfDays;
-        
-
-        
+        private Player player1;
 
         private void GetNumberOfDays()
         {
@@ -25,6 +23,13 @@ namespace LemonadeStand
                 Console.WriteLine("You didn't enter a number that is at least 7! Try again.");
                 GetNumberOfDays();
             }
+        }
+
+        public void StartGame()
+        {
+            player1 = new Player();
+            player1.GetPlayerName("Player One");
+            GetNumberOfDays();
         }
     }
 }

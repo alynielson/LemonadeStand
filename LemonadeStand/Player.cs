@@ -16,7 +16,7 @@ namespace LemonadeStand
         Inventory cups;
         Inventory sugar;
 
-        private Player()
+        public Player()
         {
             totalMoney = 20;
             popularity = 0;
@@ -26,7 +26,7 @@ namespace LemonadeStand
             sugar = new Inventory();
         }
 
-        private void GetPlayerName(string playerNumber)
+        public void GetPlayerName(string playerNumber)
         {
             Console.WriteLine($"{playerNumber}, what is your name?");
             name = Console.ReadLine();
