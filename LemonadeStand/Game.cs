@@ -10,6 +10,12 @@ namespace LemonadeStand
     {
         private int numberOfDays;
         private Player player1;
+        private Random random;
+
+        public Game()
+        {
+            random = new Random();
+        }
 
         private void GetNumberOfDays()
         {
@@ -19,7 +25,6 @@ namespace LemonadeStand
             bool isNumericAnswer = Int32.TryParse(response, out numberOfDays);
             if (!isNumericAnswer || numberOfDays < 7 )
             {
-                Console.Clear();
                 Console.WriteLine("You didn't enter a number that is at least 7! Try again.");
                 GetNumberOfDays();
             }

@@ -11,6 +11,7 @@ namespace LemonadeStand
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Lemonade Stand!");
+            Console.SetBufferSize(3, 2);
             Game newGame = new Game();
             newGame.StartGame();
         }
