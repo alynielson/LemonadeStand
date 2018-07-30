@@ -30,11 +30,18 @@ namespace LemonadeStand
             }
         }
 
-        public void StartGame()
+        public void SetUpGame()
         {
             player1 = new Player();
             player1.GetPlayerName("Player One");
             GetNumberOfDays();
+            Weather weather = new Weather();
+            
+        }
+
+        public void StartGame()
+        {
+            player1.Shop();
         }
     }
 }

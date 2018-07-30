@@ -8,9 +8,6 @@ namespace LemonadeStand
 {
     class UserInterface
     {
-        public void TestFunction()
-        {
-            Console.SetBufferSize(3, 2);
-        }
+        
     }
 }
