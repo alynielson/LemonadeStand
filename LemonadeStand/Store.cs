@@ -82,6 +82,7 @@ namespace LemonadeStand
                     player.totalMoney -= priceForQty3;
                     break;
             }
+            Console.Clear();
             Console.WriteLine($"{player.name}, you now have ${player.totalMoney} and {itemToShopFor.quantity} {itemToShopFor.name}.");
         }
 

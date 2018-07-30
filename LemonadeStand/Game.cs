@@ -37,8 +37,7 @@ namespace LemonadeStand
             player1 = new Player();
             player1.GetPlayerName("Player One");
             GetNumberOfDays();
-            Weather weather = new Weather();
-            
+            Console.Clear();
         }
 
         public void StartGame()

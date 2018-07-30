@@ -11,22 +11,18 @@ namespace LemonadeStand
         public double totalMoney;
         private int popularity;
         public string name;
-        Inventory lemons;
-        Inventory ice;
-        Inventory cups;
-        Inventory sugar;
         List<Inventory> typesOfInventory;
-        Store store;
+        
         bool isStillShopping;
 
         public Player()
         {
             totalMoney = 20;
             popularity = 0;
-            lemons = new Inventory("lemons");
-            ice = new Inventory("ice cubes");
-            cups = new Inventory("cups");
-            sugar = new Inventory("cups of sugar");
+            Inventory lemons = new Inventory("lemons");
+            Inventory ice = new Inventory("ice cubes");
+            Inventory cups = new Inventory("cups");
+            Inventory sugar = new Inventory("cups of sugar");
             typesOfInventory = new List<Inventory> {cups,lemons,sugar,ice};
             
         }
@@ -78,11 +74,22 @@ namespace LemonadeStand
             isStillShopping = true;
             do
             {
+                DisplayCurrentInventory(player);
                 int shopFor = PickWhatToShopForInList();
                 GoToStoreOrLeavePage(shopFor, player, store);
             }
             while (isStillShopping == true);
             
+        }
+
+        private void DisplayCurrentInventory(Player player)
+        {
+            Console.WriteLine($"{name}'s Current Status");
+            foreach (Inventory inventory in typesOfInventory)
+            {
+                Console.WriteLine($"{inventory.name}: {inventory.quantity}");
+            }
+            Console.WriteLine($"Money: ${player.totalMoney}");
         }
     }
 }
