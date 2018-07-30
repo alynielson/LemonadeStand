@@ -12,7 +12,11 @@ namespace LemonadeStand
         private int popularity;
         public string name;
         List<Inventory> typesOfInventory;
-        
+        double cupPrice;
+        int cupsOfSugar;
+        int numberOfIceCubes;
+        int numberOfLemons;
+        int numberOfCups;
         bool isStillShopping;
 
         public Player()

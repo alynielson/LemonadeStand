@@ -8,13 +8,15 @@ namespace LemonadeStand
 {
     class Weather
     {
-        private int temperature;
+        public int temperature;
         private List<string> forecasts;
-        private string forecast;
+        public string forecast;
 
-        public Weather()
+        public Weather(Random random)
         {
             forecasts = new List<string> { "rainy", "cloudy", "hazy", "clear and sunny" };
+            temperature = GetTemperature(random);
+            forecast = GetForecast(random);
         }
 
         private int GetTemperature(Random random)

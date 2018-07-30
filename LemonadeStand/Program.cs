@@ -8,12 +8,13 @@ namespace LemonadeStand
 {
     class Program
     {
+        
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Lemonade Stand!");
             Game newGame = new Game();
             newGame.SetUpGame();
-            newGame.StartGame();
+            newGame.PlayGame();
         }
     }
 }

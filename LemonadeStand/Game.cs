@@ -13,6 +13,7 @@ namespace LemonadeStand
         private Random random;
         private Store store;
         private List<Day> days;
+        private int currentDayIndex = 0;
 
         public Game()
         {
@@ -41,17 +42,28 @@ namespace LemonadeStand
             days = new List<Day> { };
             for (int i = 0; i < numberOfDays; i++)
             {
-                Day newDay = new Day();
+                Day newDay = new Day(random);
                 days.Add(newDay);
             }
-            Console.WriteLine(days.Count);
-            Console.ReadLine();
             Console.Clear();
+            
         }
 
-        public void StartGame()
+        public void PlayGame()
         {
-            player1.Shop(player1, store);
+            while (currentDayIndex < numberOfDays)
+            {
+                DisplayWeather();
+                player1.Shop(player1, store);
+                DisplayWeather();
+                
+            }
+        }
+
+        public void DisplayWeather()
+        {
+            int currentDay = currentDayIndex + 1;
+            Console.WriteLine($"Day {currentDay}: {days[currentDayIndex].weather.temperature} degrees, {days[currentDayIndex].weather.forecast}");
         }
     }
 }
