@@ -12,6 +12,7 @@ namespace LemonadeStand
         private Player player1;
         private Random random;
         private Store store;
+        private List<Day> days;
 
         public Game()
         {
@@ -37,6 +38,14 @@ namespace LemonadeStand
             player1 = new Player();
             player1.GetPlayerName("Player One");
             GetNumberOfDays();
+            days = new List<Day> { };
+            for (int i = 0; i < numberOfDays; i++)
+            {
+                Day newDay = new Day();
+                days.Add(newDay);
+            }
+            Console.WriteLine(days.Count);
+            Console.ReadLine();
             Console.Clear();
         }
 
