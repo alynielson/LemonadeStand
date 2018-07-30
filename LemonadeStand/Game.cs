@@ -11,6 +11,7 @@ namespace LemonadeStand
         private int numberOfDays;
         private Player player1;
         private Random random;
+        private Store store;
 
         public Game()
         {
@@ -32,6 +33,7 @@ namespace LemonadeStand
 
         public void SetUpGame()
         {
+            store = new Store();
             player1 = new Player();
             player1.GetPlayerName("Player One");
             GetNumberOfDays();
@@ -41,7 +43,7 @@ namespace LemonadeStand
 
         public void StartGame()
         {
-            player1.Shop();
+            player1.Shop(player1, store);
         }
     }
 }

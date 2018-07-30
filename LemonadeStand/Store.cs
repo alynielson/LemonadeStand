@@ -8,19 +8,19 @@ namespace LemonadeStand
 {
     class Store
     {
-        //Inventory lemons;
-        //Inventory ice;
-        //Inventory cups;
-        //Inventory sugar;
         double discountFactor1 = 0.9;
         double discountFactor2 = 0.8;
         int qtyIncreaseFactor = 2;
-        
-        
-        public void GetPricesFor(Inventory itemToShopFor)
+        double basePrice;
+        int baseQty;
+        int qty2;
+        int qty3;
+        double priceForQty1;
+        double priceForQty2;
+        double priceForQty3;
+
+        private void CalculatePricesFor(Inventory itemToShopFor)
         {
-            double basePrice = 0;
-            int baseQty = 0;
             if (itemToShopFor.name == "cups")
             {
                 basePrice = 0.035;
@@ -31,26 +31,66 @@ namespace LemonadeStand
                 basePrice = 0.09;
                 baseQty = 10;
             }
-            else if (itemToShopFor.name == "sugar")
+            else if (itemToShopFor.name == "cups of sugar")
             {
                 basePrice = 0.085;
                 baseQty = 10;
             }
-            else if (itemToShopFor.name == "ice")
+            else if (itemToShopFor.name == "ice cubes")
             {
                 basePrice = 0.0087;
                 baseQty = 100;
             }
-            double middleQty = baseQty * qtyIncreaseFactor;
-            double highestQty = middleQty * qtyIncreaseFactor;
-            double highestPrice = Math.Round(basePrice * baseQty,2);
-            double middlePrice = Math.Round(basePrice * baseQty * qtyIncreaseFactor * discountFactor1,2);
-            double lowestPrice = Math.Round(basePrice * baseQty * qtyIncreaseFactor * qtyIncreaseFactor * discountFactor2, 2);
+            qty2 = baseQty * qtyIncreaseFactor;
+            qty3 = qty2 * qtyIncreaseFactor;
+            priceForQty1 = Math.Round(basePrice * baseQty, 2);
+            priceForQty2 = Math.Round(basePrice * baseQty * qtyIncreaseFactor * discountFactor1, 2);
+            priceForQty3 = Math.Round(basePrice * baseQty * qtyIncreaseFactor * qtyIncreaseFactor * discountFactor2, 2);
+        }
+
+        private int DisplayPrices(Inventory itemToShopFor)
+        {
             Console.WriteLine($"How many {itemToShopFor.name} would you like to buy? Enter a number.");
-            Console.WriteLine($"1. {baseQty} {itemToShopFor.name} for {highestPrice}");
-            Console.WriteLine($"2. {middleQty} {itemToShopFor.name} for {middlePrice}");
-            Console.WriteLine($"3. {highestQty} {itemToShopFor.name} for {lowestPrice}");
-            Console.ReadLine();
+            Console.WriteLine($"1. {baseQty} {itemToShopFor.name} for {priceForQty1}.");
+            Console.WriteLine($"2. {qty2} {itemToShopFor.name} for {priceForQty2}.");
+            Console.WriteLine($"3. {qty3} {itemToShopFor.name} for {priceForQty3}.");
+            string answer = Console.ReadLine();
+            int numberChoice;
+            bool isNumeric = Int32.TryParse(answer, out numberChoice);
+            while (!isNumeric || numberChoice < 1 || numberChoice > 3)
+            {
+                Console.WriteLine("You didn't pick a number on the list! Try again.");
+                DisplayPrices(itemToShopFor);
+            }
+            return numberChoice;
+        }
+
+        private void purchaseItems(int numberChoice, Inventory itemToShopFor, Player player)
+        {
+            switch (numberChoice)
+            {
+                case 1:
+                    itemToShopFor.quantity += baseQty;
+                    player.totalMoney -= priceForQty1;
+                    break;
+                case 2:
+                    itemToShopFor.quantity += qty2;
+                    player.totalMoney -= priceForQty2;
+                    break;
+                case 3:
+                    itemToShopFor.quantity += qty3;
+                    player.totalMoney -= priceForQty3;
+                    break;
+            }
+            Console.WriteLine($"{player.name}, you now have ${player.totalMoney} and {itemToShopFor.quantity} {itemToShopFor.name}.");
+        }
+
+        public void DisplayPricesAndMakePurchase(Inventory itemToShopFor, Player player)
+        {
+            CalculatePricesFor(itemToShopFor);
+            int priceChoice = DisplayPrices(itemToShopFor);
+            purchaseItems(priceChoice, itemToShopFor, player);
         }
     }
+
 }

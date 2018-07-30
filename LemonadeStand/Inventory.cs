@@ -8,7 +8,7 @@ namespace LemonadeStand
 {
     class Inventory
     {
-        private int quantity;
+        public int quantity;
         public string name;
 
         public Inventory(string type)
