@@ -9,7 +9,7 @@ namespace LemonadeStand
     class Player
     {
         public double totalMoney;
-        private int popularity;
+        public int popularity=0;
         public string name;
         List<Inventory> typesOfInventory;
         double cupPrice = 0.25;

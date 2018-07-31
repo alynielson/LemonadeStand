@@ -57,13 +57,25 @@ namespace LemonadeStand
                 player1.Shop(player1, store);
                 DisplayWeather();
                 player1.DetermineRecipeAndPrice();
+                GetPotentialCustomers(days[currentDayIndex], player1);
+                currentDayIndex++;
             }
         }
 
-        public void DisplayWeather()
+        private void DisplayWeather()
         {
             int currentDay = currentDayIndex + 1;
             Console.WriteLine($"Day {currentDay}: {days[currentDayIndex].weather.temperature} degrees, {days[currentDayIndex].weather.forecast}\n ");
+        }
+
+        private void GetPotentialCustomers(Day day, Player player)
+        {
+            int forecastRanking = day.weather.GetForecastRanking(day.weather.forecast);
+            int temperature = day.weather.temperature;
+            int popularity = player.popularity;
+            day.GetNumberOfPossibleCustomers(forecastRanking, temperature, popularity, random);
+            Console.WriteLine($"{day.numberOfPotentialCustomers} could come to your stand today");
+            Console.ReadLine();
         }
 
         

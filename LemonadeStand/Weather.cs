@@ -9,7 +9,7 @@ namespace LemonadeStand
     class Weather
     {
         public int temperature;
-        private List<string> forecasts;
+        public List<string> forecasts;
         public string forecast;
 
         public Weather(Random random)
@@ -30,6 +30,12 @@ namespace LemonadeStand
             int forecastIndex = random.Next(0, forecasts.Count);
             forecast = forecasts[forecastIndex];
             return forecast;
+        }
+
+        public int GetForecastRanking(string forecast)
+        {
+            int forecastRanking = forecasts.IndexOf(forecast) + 1;
+            return forecastRanking;
         }
     }
 }

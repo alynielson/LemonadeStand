@@ -9,16 +9,28 @@ namespace LemonadeStand
     class Day
     {
         public Weather weather;
+        
+
         public Day(Random random)
         {
             weather = new Weather(random);
         }
         
-        int numberOfPotentialCustomers;
+        public int numberOfPotentialCustomers;
 
-        private void GetNumberOfPossibleCustomers(Weather weather, Player player)
+
+        public void GetNumberOfPossibleCustomers(int forecastRanking, int temperature, int popularity, Random random)
         {
-               
+            double maxPointsFromForecasts = 50;
+            double pointsPerForecast = maxPointsFromForecasts/weather.forecasts.Count ; 
+            int maxRandomAmount = Convert.ToInt32(pointsPerForecast * forecastRanking);
+            int pointsFromForecast = random.Next(0, maxRandomAmount);
+            if (popularity > 1)
+            {
+                int maxPopularityEffect = 10;
+                int popularityEffect = Convert.ToInt32(popularity / maxPopularityEffect);
+            }
+            numberOfPotentialCustomers = temperature + pointsFromForecast + popularity;
         }
 
         
