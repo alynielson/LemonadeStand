@@ -56,7 +56,7 @@ namespace LemonadeStand
                 DisplayWeather();
                 player1.Shop(player1, store);
                 DisplayWeather();
-                
+                player1.DetermineRecipeAndPrice();
             }
         }
 
@@ -65,5 +65,7 @@ namespace LemonadeStand
             int currentDay = currentDayIndex + 1;
             Console.WriteLine($"Day {currentDay}: {days[currentDayIndex].weather.temperature} degrees, {days[currentDayIndex].weather.forecast}");
         }
+
+        
     }
 }

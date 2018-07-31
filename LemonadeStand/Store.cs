@@ -50,18 +50,22 @@ namespace LemonadeStand
 
         private int DisplayPrices(Inventory itemToShopFor)
         {
-            Console.WriteLine($"How many {itemToShopFor.name} would you like to buy? Enter a number.");
-            Console.WriteLine($"1. {baseQty} {itemToShopFor.name} for {priceForQty1}.");
-            Console.WriteLine($"2. {qty2} {itemToShopFor.name} for {priceForQty2}.");
-            Console.WriteLine($"3. {qty3} {itemToShopFor.name} for {priceForQty3}.");
-            string answer = Console.ReadLine();
             int numberChoice;
-            bool isNumeric = Int32.TryParse(answer, out numberChoice);
-            while (!isNumeric || numberChoice < 1 || numberChoice > 3)
+            bool isNumeric;
+            do
             {
-                Console.WriteLine("You didn't pick a number on the list! Try again.");
-                DisplayPrices(itemToShopFor);
+                Console.WriteLine($"How many {itemToShopFor.name} would you like to buy? Enter a number.");
+                Console.WriteLine($"1. {baseQty} {itemToShopFor.name} for {priceForQty1}.");
+                Console.WriteLine($"2. {qty2} {itemToShopFor.name} for {priceForQty2}.");
+                Console.WriteLine($"3. {qty3} {itemToShopFor.name} for {priceForQty3}.");
+                string answer = Console.ReadLine();
+                isNumeric = Int32.TryParse(answer, out numberChoice);
+                if (!isNumeric || numberChoice < 1 || numberChoice > 3)
+                {
+                    Console.WriteLine("You didn't pick a number on the list! Try again.");
+                }
             }
+            while (!isNumeric || numberChoice < 1 || numberChoice > 3);
             return numberChoice;
         }
 
