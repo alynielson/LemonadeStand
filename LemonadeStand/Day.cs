@@ -54,6 +54,7 @@ namespace LemonadeStand
             int temperature = day.weather.temperature;
             totalCupsBought = 0;
             totalCustomersPurchased = 0;
+            double satisfactionPoints = 0;
             foreach (Customer customer in customers)
             {
                 int cupsWantingToPurchase = customer.DetermineIfPurchaseMade(cupPrice, random, temperature, forecastRanking, popularity);
@@ -79,14 +80,17 @@ namespace LemonadeStand
                 if (customer.didPurchaseCups == true)
                 {
                     totalCustomersPurchased++;
+                    satisfactionPoints+= customer.DetermineOverallSatisfaction(weather, player, random);
                 }
                 if (player.isOutOfSupplies == true)
                 {
                     break;
                 }
             }
+            double overallSatisfaction = Convert.ToInt32(satisfactionPoints / totalCustomersPurchased);
             Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
             Console.WriteLine($"{ totalCupsBought} cups total were sold.");
+            Console.WriteLine($"Overall satisfaction was {overallSatisfaction}%.");
             Console.ReadLine();
             
         }

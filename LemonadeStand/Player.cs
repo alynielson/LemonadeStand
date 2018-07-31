@@ -13,9 +13,9 @@ namespace LemonadeStand
         public string name;
         List<Inventory> typesOfInventory;
         public double cupPrice = 0.25;
-        int sugarPerPitcher = 4;
-        int icePerCup = 4;
-        int lemonsPerPitcher =4 ;
+        public int sugarPerPitcher = 4;
+        public int icePerCup = 4;
+        public int lemonsPerPitcher =4 ;
         bool isStillShopping;
         int cupsInPitcher;
         public bool isOutOfSupplies;

@@ -95,13 +95,84 @@ namespace LemonadeStand
                 didPurchaseCups = false;
             }
         }
+        
 
-        public void DetermineSatisfaction(Weather weather)
+        public double DetermineIceSatisfaction(Weather weather, Player player, Random random)
         {
-            if (didPurchaseCups == true)
+            double optimumIcePerCup;
+            if (weather.temperature >= 82)
             {
-
+                optimumIcePerCup = Convert.ToDouble(random.Next(4,9));
             }
+            else if (weather.temperature >= 67)
+            {
+                optimumIcePerCup = Convert.ToDouble(random.Next(3,6));
+            }
+            else
+            {
+                optimumIcePerCup = Convert.ToDouble(random.Next(1,4));
+            }
+            double difference = Math.Abs(optimumIcePerCup - player.icePerCup);
+            if (difference > optimumIcePerCup)
+            {
+                difference = optimumIcePerCup;
+            }
+            double fractionDifference = difference / optimumIcePerCup;
+            double iceSatisfaction = 100 - fractionDifference * 100;
+            return iceSatisfaction;
+        }
+
+        public double DetermineSugarSatisfaction(Weather weather, Player player, Random random)
+        {
+            double optimumSugarAmount;
+            if (weather.forecast == weather.forecasts[3])
+            {
+                optimumSugarAmount = Convert.ToDouble(random.Next(7, 11));
+            }
+            else if (weather.forecast == weather.forecasts[2])
+            {
+                optimumSugarAmount = Convert.ToDouble(random.Next(5, 9));
+            }
+            else if (weather.forecast == weather.forecasts[1])
+            {
+                optimumSugarAmount = Convert.ToDouble(random.Next(3, 7));
+            }
+            else
+            {
+                optimumSugarAmount = Convert.ToDouble(random.Next(1, 5));
+            }
+            double difference = Math.Abs(optimumSugarAmount - player.sugarPerPitcher);
+            if (difference > optimumSugarAmount)
+            {
+                difference = optimumSugarAmount;
+            }
+            double fractionDifference = difference / optimumSugarAmount;
+            double sugarSatisfaction = 100 - fractionDifference * 100;
+            return sugarSatisfaction;
+        }
+
+        public double DetermineLemonSatisfaction(Weather weather, Player player, Random random)
+        {
+            double number = Convert.ToDouble(random.Next(1, 21));
+            double optimumLemonToSugarRatio = number / 10;
+            double actualRatio = Convert.ToDouble(player.lemonsPerPitcher) / Convert.ToDouble(player.sugarPerPitcher);
+            double difference = Math.Abs(optimumLemonToSugarRatio - actualRatio);
+            if (difference > optimumLemonToSugarRatio)
+            {
+                difference = optimumLemonToSugarRatio;
+            }
+            double fractionDifference = difference / optimumLemonToSugarRatio;
+            double lemonSatisfaction = 100 - fractionDifference * 100;
+            return lemonSatisfaction;
+        }
+
+        public double DetermineOverallSatisfaction(Weather weather, Player player, Random random)
+        {
+            double iceSatisfaction = DetermineIceSatisfaction(weather, player, random);
+            double sugarSatisfaction = DetermineSugarSatisfaction(weather, player, random);
+            double lemonSatisfaction = DetermineLemonSatisfaction(weather, player, random);
+            double overallSatisfaction = (iceSatisfaction / 3 + lemonSatisfaction / 3 + sugarSatisfaction / 3);
+            return overallSatisfaction;
         }
     }
 }
