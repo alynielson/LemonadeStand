@@ -67,8 +67,7 @@ namespace LemonadeStand
             if (inventoryNumberChoice == numberToLeavePage)
             {
                 isStillShopping = false;
-                Console.WriteLine("You're done shopping!");
-                Console.ReadLine();
+                Console.Clear();
             }
             else
             {
@@ -171,7 +170,15 @@ namespace LemonadeStand
                 }
             }
             while (!isNumeric || number < 1 || number > 99);
-            cupPrice = number / 100;
+            cupPrice = ConvertCentsToDollars(number);
+        }
+
+        private double ConvertCentsToDollars(int cents)
+        {
+            double centsDouble = Convert.ToDouble(cents);
+            double centsPerDollar = 100;
+            cupPrice = centsDouble / centsPerDollar;
+            return cupPrice;
         }
 
         private void ChangeLemonsPerPitcher()

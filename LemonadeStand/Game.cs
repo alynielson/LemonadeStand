@@ -63,7 +63,7 @@ namespace LemonadeStand
         public void DisplayWeather()
         {
             int currentDay = currentDayIndex + 1;
-            Console.WriteLine($"Day {currentDay}: {days[currentDayIndex].weather.temperature} degrees, {days[currentDayIndex].weather.forecast}");
+            Console.WriteLine($"Day {currentDay}: {days[currentDayIndex].weather.temperature} degrees, {days[currentDayIndex].weather.forecast}\n ");
         }
 
         
