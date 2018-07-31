@@ -10,6 +10,8 @@ namespace LemonadeStand
     {
         public Weather weather;
         private List<Customer> customers;
+        public int totalCupsBought;
+        public int totalCustomersPurchased;
 
         public Day(Random random)
         {
@@ -46,22 +48,45 @@ namespace LemonadeStand
             }
         }
 
-       public void DetermineCupsPurchased(double cupPrice, Random random, int popularity, Day day)
+       public void DetermineCupsPurchased(double cupPrice, Random random, int popularity, Day day, Player player)
         {
             int forecastRanking = day.weather.GetForecastRanking(day.weather.forecast);
             int temperature = day.weather.temperature;
-            int totalCupsBought = 0;
-            int totalCustomersPurchased = 0;
+            totalCupsBought = 0;
+            totalCustomersPurchased = 0;
             foreach (Customer customer in customers)
             {
-                int cupsPurchased = customer.DetermineIfPurchaseMade(cupPrice, random, temperature, forecastRanking, popularity);
-                totalCupsBought += cupsPurchased;
-                if (customer.CheckIfCupsWerePurchased(cupsPurchased) == true)
+                int cupsWantingToPurchase = customer.DetermineIfPurchaseMade(cupPrice, random, temperature, forecastRanking, popularity);
+                int cupsActuallyPurchased;
+                if (cupsWantingToPurchase > 0)
+                {
+                    cupsActuallyPurchased = 0;
+                    for (int i = 0; i < cupsWantingToPurchase; i++)
+                    {
+                        player.MakeCup();
+                        if (player.isOutOfSupplies == false)
+                        {
+                            cupsActuallyPurchased++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    totalCupsBought += cupsActuallyPurchased;
+                    customer.CheckIfCupsWerePurchased(cupsActuallyPurchased);
+                }
+                if (customer.didPurchaseCups == true)
                 {
                     totalCustomersPurchased++;
                 }
+                if (player.isOutOfSupplies == true)
+                {
+                    break;
+                }
             }
-            Console.WriteLine($"{totalCustomersPurchased} customers bought, {totalCupsBought} cups sold");
+            Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
+            Console.WriteLine($"{ totalCupsBought} cups total were sold.");
             Console.ReadLine();
             
         }

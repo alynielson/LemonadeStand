@@ -11,7 +11,7 @@ namespace LemonadeStand
         
         int satisfactionByPrice;
         int satisfactionByRecipe;
-        
+        public bool didPurchaseCups;
         int satisfaction;
         
 
@@ -84,14 +84,24 @@ namespace LemonadeStand
             return cupsPurchased;
         }
 
-        public bool CheckIfCupsWerePurchased(int cupsPurchased)
+        public void CheckIfCupsWerePurchased(int cupsPurchased)
         {
-            bool purchasedCups = false;
             if (cupsPurchased > 0)
             {
-                purchasedCups = true;
+                didPurchaseCups = true;
             }
-            return purchasedCups;
+            else
+            {
+                didPurchaseCups = false;
+            }
+        }
+
+        public void DetermineSatisfaction(Weather weather)
+        {
+            if (didPurchaseCups == true)
+            {
+
+            }
         }
     }
 }

@@ -17,18 +17,68 @@ namespace LemonadeStand
         int icePerCup = 4;
         int lemonsPerPitcher =4 ;
         bool isStillShopping;
+        int cupsInPitcher;
+        public bool isOutOfSupplies;
+        Inventory lemons;
+        Inventory cups;
+        Inventory sugar;
+        Inventory ice;
 
         public Player()
         {
             totalMoney = 20;
             popularity = 0;
-            Inventory lemons = new Inventory("lemons");
-            Inventory ice = new Inventory("ice cubes");
-            Inventory cups = new Inventory("cups");
-            Inventory sugar = new Inventory("cups of sugar");
+            lemons = new Inventory("lemons");
+            ice = new Inventory("ice cubes");
+            cups = new Inventory("cups");
+            sugar = new Inventory("cups of sugar");
             typesOfInventory = new List<Inventory> {cups,lemons,sugar,ice};
             
         }
+
+        public double ChangeTotalMoney(int totalCupsBought)
+        {
+            double moneyChange = totalCupsBought * cupPrice;
+            totalMoney += moneyChange;
+            return moneyChange;
+        }
+        public void MakePitcher()
+        {
+            if (lemons.quantity < lemonsPerPitcher || sugar.quantity < sugarPerPitcher)
+            {
+                isOutOfSupplies = true;
+                Console.WriteLine("You ran out of supplies to make a new pitcher! Sold out for the day!");
+            }
+            else
+            {
+                lemons.quantity -= lemonsPerPitcher;
+                sugar.quantity -= sugarPerPitcher;
+                cupsInPitcher = 10;
+            }
+        }
+        public void MakeCup()
+        {
+            if (cups.quantity < 1 || ice.quantity < icePerCup)
+            {
+                isOutOfSupplies = true;
+                Console.WriteLine("You ran out of supplies to make another cup! Sold out for the day!");
+            }
+            else if (cupsInPitcher < 1)
+            {
+                MakePitcher();
+                if (isOutOfSupplies == false)
+                {
+                    MakeCup();
+                }     
+            }
+            else
+            {
+                cups.quantity--;
+                ice.quantity -= icePerCup;
+                cupsInPitcher--;
+            }
+        }
+
 
         public void GetPlayerName(string playerNumber)
         {
@@ -100,6 +150,7 @@ namespace LemonadeStand
 
         public void DetermineRecipeAndPrice()
         {
+            isOutOfSupplies = false;
             do
             {
                 isStillShopping = true;
