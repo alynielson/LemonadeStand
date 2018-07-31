@@ -87,7 +87,15 @@ namespace LemonadeStand
                     break;
                 }
             }
-            double overallSatisfaction = Convert.ToInt32(satisfactionPoints / totalCustomersPurchased);
+            double overallSatisfaction;
+            if (satisfactionPoints == 0)
+            {
+                overallSatisfaction = 0;
+            }
+            else
+            {
+                overallSatisfaction = satisfactionPoints / totalCustomersPurchased;
+            }
             Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
             Console.WriteLine($"{ totalCupsBought} cups total were sold.");
             Console.WriteLine($"Overall satisfaction was {overallSatisfaction}%.");
