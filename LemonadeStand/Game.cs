@@ -54,24 +54,38 @@ namespace LemonadeStand
         {
             while (currentDayIndex < numberOfDays)
             {
-                DisplayWeatherForecast();
-                player1.dailyMoneySpent = 0;
-                player1.Shop(player1, store);
-                if (player1.isGameOver == true)
-                {
-                    break;
-                }
-                DisplayWeather();
-                player1.DetermineRecipeAndPrice();
-                DisplayWeather();
                 days[currentDayIndex].GetPotentialCustomers(random);
                 days[currentDayIndex].CreateCustomers();
-                days[currentDayIndex].GetResults(random, player1);
-                days[currentDayIndex].DisplayResults();
-                player1.GetPopularity(days[currentDayIndex], numberOfDays);
-                player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
-                Console.WriteLine($"Press enter to continue!");
-                Console.ReadLine();
+                player1.dailyMoneySpent = 0;
+                while (player1.isGameOver == false)
+                {
+                    int action = UserInterface.DisplayMainMenu();
+                    switch (action)
+                    {
+                        case 1:
+                            DisplayWeatherForecast();
+                            break;
+                        case 2:
+                            player1.DetermineRecipeAndPrice();
+                            break;
+                        case 3:
+                            player1.Shop(player1, store);
+                            if (player1.isGameOver == true)
+                            {
+                                break;
+                            }
+                            break;
+                        case 4:
+                            DisplayWeather();
+                            days[currentDayIndex].GetResults(random, player1);
+                            days[currentDayIndex].DisplayResults();
+                            player1.GetPopularity(days[currentDayIndex], numberOfDays);
+                            player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
+                            Console.WriteLine($"Press enter to continue!");
+                            Console.ReadLine();
+                            break;
+                    }
+                }
                 Console.Clear();
                 currentDayIndex++;
             }
