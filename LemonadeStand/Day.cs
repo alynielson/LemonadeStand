@@ -44,6 +44,20 @@ namespace LemonadeStand
             }
         }
 
+        public bool CheckForNoCustomers()
+        {
+            bool hasCustomers = true;
+            if (numberOfPotentialCustomers == 0)
+            {
+                overallSatisfaction = 0;
+                totalCupsBought = 0;
+                totalCustomersPurchased = 0;
+                hasCustomers = false;
+            }
+            return hasCustomers;
+
+        }
+
        public void GetResults(Random random, Player player)
         {
             overallSatisfaction = 0;

@@ -52,42 +52,43 @@ namespace LemonadeStand
 
         public void PlayGame()
         {
-            while (currentDayIndex < numberOfDays)
+            while (currentDayIndex < numberOfDays && player1.isGameOver == false)
             {
+                int action = UserInterface.DisplayMainMenu();
                 days[currentDayIndex].CalculatePossibleCustomers(days[currentDayIndex].weather, random);
                 days[currentDayIndex].CreateCustomers();
-                player1.dailyMoneySpent = 0;
-                while (player1.isGameOver == false)
-                {
-                    int action = UserInterface.DisplayMainMenu();
-                    switch (action)
-                    {
-                        case 1:
-                            DisplayWeatherForecast();
-                            break;
-                        case 2:
-                            player1.DetermineRecipeAndPrice();
-                            break;
-                        case 3:
-                            player1.Shop(player1, store);
-                            if (player1.isGameOver == true)
-                            {
-                                break;
-                            }
-                            break;
-                        case 4:
-                            DisplayWeather();
-                            days[currentDayIndex].GetResults(random, player1);
-                            days[currentDayIndex].DisplayResults();
-                            player1.GetPopularity(days[currentDayIndex], numberOfDays);
-                            player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
-                            Console.WriteLine($"Press enter to continue!");
-                            Console.ReadLine();
-                            break;
-                    }
-                }
                 Console.Clear();
-                currentDayIndex++;
+                switch (action)
+                {
+                    case 1:
+                        DisplayWeatherForecast();
+                        UserInterface.GoBackToMenu();
+                        break;
+                    case 2:
+                        player1.DetermineRecipeAndPrice();
+                        break;
+                    case 3:
+                        player1.Shop(player1, store);
+                        if (player1.isGameOver == true)
+                        {
+                            break;
+                        }
+                        break;
+                    case 4:
+                        DisplayWeather();
+                        bool hasCustomers = days[currentDayIndex].CheckForNoCustomers();
+                        if (hasCustomers == true)
+                        {
+                            days[currentDayIndex].GetResults(random, player1);
+                        }
+                        days[currentDayIndex].DisplayResults();
+                        player1.GetPopularity(days[currentDayIndex], numberOfDays);
+                        player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
+                        UserInterface.GoBackToMenu();
+                        currentDayIndex++;
+                        player1.dailyMoneySpent = 0;
+                        break;
+                }  
             }
             player1.DisplayEndResults();
             Console.ReadLine();
@@ -108,6 +109,7 @@ namespace LemonadeStand
             {
                 Console.WriteLine("(1) See predicted weather for today.\n(2) See predicted weather for the week.\n(3) Back to main menu.");
                 string answer = Console.ReadLine();
+                Console.Clear();
                 isNumeric = Int32.TryParse(answer, out numberChoice);
                 if (!isNumeric || numberChoice < 1 || numberChoice > 3)
                 {

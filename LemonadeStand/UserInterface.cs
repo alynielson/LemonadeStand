@@ -28,6 +28,13 @@ namespace LemonadeStand
 
         }
 
+        public static void GoBackToMenu()
+        {
+            Console.WriteLine("Press enter to go back to the menu.");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
         
     }
 }

@@ -9,7 +9,7 @@ namespace LemonadeStand
     class Player
     {
         public double totalMoney;
-        public double dailyMoneySpent;
+        public double dailyMoneySpent = 0;
         public double totalMoneySpent = 0;
         public double totalMoneyGained = 0;
         public int popularity=0;
@@ -283,6 +283,7 @@ namespace LemonadeStand
                     isStillShopping = false;
                     break;
             }
+            Console.Clear();
         }
 
         private void ChangeCupPrice()

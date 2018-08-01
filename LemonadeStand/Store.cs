@@ -54,6 +54,7 @@ namespace LemonadeStand
             bool isNumeric;
             do
             {
+                Console.Clear();
                 Console.WriteLine($"How many {itemToShopFor.name} would you like to buy? Enter a number.");
                 Console.WriteLine($"1. {baseQty} {itemToShopFor.name} for {priceForQty1}.");
                 Console.WriteLine($"2. {qty2} {itemToShopFor.name} for {priceForQty2}.");
@@ -62,7 +63,8 @@ namespace LemonadeStand
                 isNumeric = Int32.TryParse(answer, out numberChoice);
                 if (!isNumeric || numberChoice < 1 || numberChoice > 3)
                 {
-                    Console.WriteLine("You didn't pick a number on the list! Try again.");
+                    Console.WriteLine("You didn't pick a number on the list! Press Enter to try again.");
+                    Console.ReadLine();
                 }
             }
             while (!isNumeric || numberChoice < 1 || numberChoice > 3);
