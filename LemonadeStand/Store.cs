@@ -76,14 +76,17 @@ namespace LemonadeStand
                 case 1:
                     itemToShopFor.quantity += baseQty;
                     player.totalMoney -= priceForQty1;
+                    player.dailyMoney += priceForQty1;
                     break;
                 case 2:
                     itemToShopFor.quantity += qty2;
                     player.totalMoney -= priceForQty2;
+                    player.dailyMoney += priceForQty2;
                     break;
                 case 3:
                     itemToShopFor.quantity += qty3;
                     player.totalMoney -= priceForQty3;
+                    player.dailyMoney += priceForQty3;
                     break;
             }
             Console.Clear();

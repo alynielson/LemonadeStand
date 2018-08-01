@@ -8,7 +8,7 @@ namespace LemonadeStand
 {
     class Game
     {
-        private int numberOfDays;
+        public int numberOfDays;
         private Player player1;
         private Random random;
         private Store store;
@@ -61,6 +61,8 @@ namespace LemonadeStand
                 days[currentDayIndex].CreateCustomers();
                 days[currentDayIndex].GetResults(random, player1);
                 days[currentDayIndex].DisplayResults();
+                player1.GetPopularity(days[currentDayIndex], numberOfDays);
+                player1.DisplayResults(days[currentDayIndex].totalCupsBought);
                 currentDayIndex++;
             }
         }

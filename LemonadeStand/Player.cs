@@ -9,6 +9,7 @@ namespace LemonadeStand
     class Player
     {
         public double totalMoney;
+        public double dailyMoney;
         public int popularity=0;
         public string name;
         List<Inventory> typesOfInventory;
@@ -34,6 +35,28 @@ namespace LemonadeStand
             sugar = new Inventory("cups of sugar");
             typesOfInventory = new List<Inventory> {cups,lemons,sugar,ice};
             
+        }
+
+        public void DisplayResults(int totalCupsBought)
+        {
+            double moneyChange = GetChangeInMoney(totalCupsBought);
+            totalMoney = ChangeTotalMoney(moneyChange);
+            double netChange = moneyChange - dailyMoney;
+            string gainOrLoss = "loss";
+            if (netChange > 0)
+            {
+                gainOrLoss = "gain";
+            }
+            netChange = Math.Abs(netChange);
+            Console.WriteLine($"{name}, today you spent ${dailyMoney} at the store and made ${moneyChange} in sales.\nYour net {gainOrLoss} for the day is ${netChange}.");
+        }
+
+        public void GetPopularity(Day day, int numberOfDays)
+        {
+            double percentageOfOneDay = 100 / Convert.ToDouble(numberOfDays);
+            int addToPopularity = Convert.ToInt32(Convert.ToDouble(day.overallSatisfaction) * percentageOfOneDay / 100);
+            popularity += addToPopularity;
+            Console.WriteLine($"Your overall popularity is {popularity}%.");
         }
 
         public double GetChangeInMoney(int totalCupsBought)
@@ -132,6 +155,7 @@ namespace LemonadeStand
 
         public void Shop(Player player, Store store)
         {
+            dailyMoney = 0;
             isStillShopping = true;
             do
             {

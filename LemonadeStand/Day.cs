@@ -9,11 +9,11 @@ namespace LemonadeStand
     class Day
     {
         public Weather weather;
-        private List<Customer> customers;
+        public List<Customer> customers;
         public int totalCupsBought;
         private int totalCustomersPurchased;
         private int numberOfPotentialCustomers;
-        private int overallSatisfaction;
+        public int overallSatisfaction;
 
         public Day(Random random)
         {
