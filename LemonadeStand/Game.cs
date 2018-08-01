@@ -63,6 +63,9 @@ namespace LemonadeStand
                 days[currentDayIndex].DisplayResults();
                 player1.GetPopularity(days[currentDayIndex], numberOfDays);
                 player1.DisplayResults(days[currentDayIndex].totalCupsBought);
+                Console.WriteLine($"Press enter to start tomorrow!");
+                Console.ReadLine();
+                Console.Clear();
                 currentDayIndex++;
             }
         }

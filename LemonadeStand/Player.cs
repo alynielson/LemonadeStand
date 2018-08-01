@@ -49,6 +49,17 @@ namespace LemonadeStand
             }
             netChange = Math.Abs(netChange);
             Console.WriteLine($"{name}, today you spent ${dailyMoney} at the store and made ${moneyChange} in sales.\nYour net {gainOrLoss} for the day is ${netChange}.");
+            double totalChange = totalMoney - 20;
+            if (totalChange > 0)
+            {
+                gainOrLoss = "gain";
+            }
+            else
+            {
+                gainOrLoss = "loss";
+            }
+            totalChange = Math.Abs(totalChange);
+            Console.WriteLine($"You end the day with ${totalMoney} total. Your total net {gainOrLoss} so far is {totalChange}.");
         }
 
         public void GetPopularity(Day day, int numberOfDays)
@@ -169,7 +180,6 @@ namespace LemonadeStand
 
         private void DisplayCurrentInventory()
         {
-            Console.WriteLine($"{name}'s Current Status");
             foreach (Inventory inventory in typesOfInventory)
             {
                 Console.WriteLine($"{inventory.name}: {inventory.quantity}");
