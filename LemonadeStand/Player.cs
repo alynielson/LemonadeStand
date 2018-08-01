@@ -9,7 +9,9 @@ namespace LemonadeStand
     class Player
     {
         public double totalMoney;
-        public double dailyMoney;
+        public double dailyMoneySpent;
+        public double totalMoneySpent = 0;
+        public double totalMoneyGained = 0;
         public int popularity=0;
         public string name;
         List<Inventory> typesOfInventory;
@@ -17,9 +19,10 @@ namespace LemonadeStand
         public int sugarPerPitcher = 4;
         public int icePerCup = 4;
         public int lemonsPerPitcher =4 ;
-        bool isStillShopping;
+        public bool isStillShopping;
         int cupsInPitcher;
         public bool isOutOfSupplies;
+        public bool isGameOver = false;
         Inventory lemons;
         Inventory cups;
         Inventory sugar;
@@ -37,31 +40,68 @@ namespace LemonadeStand
             
         }
 
-        public void DisplayResults(int totalCupsBought)
+        private string DetermineGainOrLoss(double amount)
+        {
+            string gainOrLoss = "loss";
+            if (amount > 0)
+            {
+                gainOrLoss = "gain";
+            }
+            return gainOrLoss;
+        }
+
+        public bool CheckIfBankrupt(double priceOfItem)
+        {
+            bool isBankrupt = false;
+            if (totalMoney < priceOfItem)
+            {
+                isBankrupt = true;
+            }
+            return isBankrupt;
+        }
+
+        public void DeclareBankruptcy()
+        {
+            Console.WriteLine($"{name}, you've gone bankrupt! Your game is over!");
+            totalMoney = 0;
+            isGameOver = true;
+            
+        }
+
+        private void DetermineNetChange(int totalCupsBought)
         {
             double moneyChange = GetChangeInMoney(totalCupsBought);
             totalMoney = ChangeTotalMoney(moneyChange);
-            double netChange = moneyChange - dailyMoney;
-            string gainOrLoss = "loss";
-            if (netChange > 0)
-            {
-                gainOrLoss = "gain";
-            }
+            totalMoneySpent += dailyMoneySpent;
+            totalMoneyGained += moneyChange;
+            double netChange = moneyChange - dailyMoneySpent;
+            string gainOrLoss = DetermineGainOrLoss(netChange);
             netChange = Math.Abs(netChange);
-            Console.WriteLine($"{name}, today you spent ${dailyMoney} at the store and made ${moneyChange} in sales.\nYour net {gainOrLoss} for the day is ${netChange}.");
+            Console.WriteLine($"{name}, today you spent ${dailyMoneySpent} at the store and made ${moneyChange} in sales.\nYour net {gainOrLoss} for the day is ${netChange}.");
+        }
+        private void DetermineTotalChange(int totalCupsBought)
+        {
             double totalChange = totalMoney - 20;
-            if (totalChange > 0)
-            {
-                gainOrLoss = "gain";
-            }
-            else
-            {
-                gainOrLoss = "loss";
-            }
+            string gainOrLoss = DetermineGainOrLoss(totalChange);
             totalChange = Math.Abs(totalChange);
-            Console.WriteLine($"You end the day with ${totalMoney} total. Your total net {gainOrLoss} so far is {totalChange}.");
+            Console.WriteLine($"You end the day with ${totalMoney} total. Your net {gainOrLoss} so far is ${totalChange}.");
         }
 
+        public void DisplayMoneyResults(int totalCupsBought)
+        {
+            DetermineNetChange(totalCupsBought);
+            DetermineTotalChange(totalCupsBought);
+        }
+
+        public void DisplayEndResults()
+        {
+            Console.WriteLine($"{name}, you end the game with ${totalMoney}.");
+            Console.WriteLine($"You spent ${totalMoneySpent} and made ${totalMoneyGained} in sales.");
+            Console.WriteLine($"Your popularity was ${popularity}%.");
+            Console.ReadLine();
+        }
+
+        
         public void GetPopularity(Day day, int numberOfDays)
         {
             double percentageOfOneDay = 100 / Convert.ToDouble(numberOfDays);
@@ -166,7 +206,7 @@ namespace LemonadeStand
 
         public void Shop(Player player, Store store)
         {
-            dailyMoney = 0;
+            dailyMoneySpent = 0;
             isStillShopping = true;
             do
             {

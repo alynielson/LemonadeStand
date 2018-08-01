@@ -56,18 +56,27 @@ namespace LemonadeStand
             {
                 DisplayWeather();
                 player1.Shop(player1, store);
+                if (player1.isGameOver == true)
+                {
+                    break;
+                }
+                DisplayWeather();
                 player1.DetermineRecipeAndPrice();
+                DisplayWeather();
                 days[currentDayIndex].GetPotentialCustomers(random);
                 days[currentDayIndex].CreateCustomers();
                 days[currentDayIndex].GetResults(random, player1);
                 days[currentDayIndex].DisplayResults();
                 player1.GetPopularity(days[currentDayIndex], numberOfDays);
-                player1.DisplayResults(days[currentDayIndex].totalCupsBought);
-                Console.WriteLine($"Press enter to start tomorrow!");
+                player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
+                Console.WriteLine($"Press enter to continue!");
                 Console.ReadLine();
                 Console.Clear();
                 currentDayIndex++;
             }
+            player1.DisplayEndResults();
+            Console.ReadLine();
+            Console.Clear();
         }
 
         private void DisplayWeather()

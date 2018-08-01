@@ -71,26 +71,57 @@ namespace LemonadeStand
 
         private void purchaseItems(int numberChoice, Inventory itemToShopFor,Player player)
         {
+            bool isShopperBankrupt;
             switch (numberChoice)
             {
                 case 1:
-                    itemToShopFor.quantity += baseQty;
-                    player.totalMoney -= priceForQty1;
-                    player.dailyMoney += priceForQty1;
+                    isShopperBankrupt = player.CheckIfBankrupt(priceForQty1);
+                    if (isShopperBankrupt == false)
+                    {
+                        itemToShopFor.quantity += baseQty;
+                        player.totalMoney -= priceForQty1;
+                        player.dailyMoneySpent += priceForQty1;
+                    }
+                    else
+                    {
+                        player.isStillShopping = false;
+                        player.DeclareBankruptcy();
+                    }
                     break;
                 case 2:
-                    itemToShopFor.quantity += qty2;
-                    player.totalMoney -= priceForQty2;
-                    player.dailyMoney += priceForQty2;
+                    isShopperBankrupt = player.CheckIfBankrupt(priceForQty2);
+                    if (isShopperBankrupt == false)
+                    {
+                        itemToShopFor.quantity += qty2;
+                        player.totalMoney -= priceForQty2;
+                        player.dailyMoneySpent += priceForQty2;
+                    }
+                    else
+                    {
+                        player.isStillShopping = false;
+                        player.DeclareBankruptcy();
+                    }
                     break;
                 case 3:
-                    itemToShopFor.quantity += qty3;
-                    player.totalMoney -= priceForQty3;
-                    player.dailyMoney += priceForQty3;
+                    isShopperBankrupt = player.CheckIfBankrupt(priceForQty3);
+                    if (isShopperBankrupt == false) 
+                    {
+                        itemToShopFor.quantity += qty3;
+                        player.totalMoney -= priceForQty3;
+                        player.dailyMoneySpent += priceForQty3;
+                    }
+                    else
+                    {
+                        player.isStillShopping = false;
+                        player.DeclareBankruptcy();
+                    }
                     break;
             }
-            Console.Clear();
-            Console.WriteLine($"{player.name}, you now have ${player.totalMoney} and {itemToShopFor.quantity} {itemToShopFor.name}.");
+            if (player.isGameOver == false)
+            {
+                Console.Clear();
+                Console.WriteLine($"{player.name}, you now have ${player.totalMoney} and {itemToShopFor.quantity} {itemToShopFor.name}.");
+            }
         }
 
         public void DisplayPricesAndMakePurchase(Inventory itemToShopFor, Player player)
