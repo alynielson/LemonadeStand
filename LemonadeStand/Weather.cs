@@ -11,10 +11,12 @@ namespace LemonadeStand
         public int temperature;
         public List<string> forecasts;
         public string forecast;
+        public int forecastRanking;
 
         public Weather(Random random)
         {
             forecasts = new List<string> { "rainy", "cloudy", "hazy", "clear and sunny" };
+            forecastRanking = GetForecastRanking(forecast);
             temperature = GetTemperature(random);
             forecast = GetForecast(random);
         }
@@ -34,7 +36,7 @@ namespace LemonadeStand
 
         public int GetForecastRanking(string forecast)
         {
-            int forecastRanking = forecasts.IndexOf(forecast) + 1;
+            forecastRanking = forecasts.IndexOf(forecast) + 1;
             return forecastRanking;
         }
     }

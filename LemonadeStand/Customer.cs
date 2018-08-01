@@ -13,7 +13,24 @@ namespace LemonadeStand
         int satisfactionByRecipe;
         public bool didPurchaseCups;
         int satisfaction;
-        
+
+        public int BuyLemonade(int cupsWantingToPurchase, int cupsActuallyPurchased, int totalCupsBought, Player player)
+        {
+            for (int i = 0; i < cupsWantingToPurchase; i++)
+            {
+                player.MakeCup();
+                if (player.isOutOfSupplies == false)
+                {
+                    cupsActuallyPurchased++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return cupsActuallyPurchased;
+            
+        }
 
         public int CalculateLikelihoodByPrice(double cupPrice, Random random)
         {
@@ -49,12 +66,12 @@ namespace LemonadeStand
             return likelihoodByPopularity;
         }
 
-        public int DetermineIfPurchaseMade(double cupPrice, Random random, int temperature, int forecastRanking, int popularity)
+        public int DetermineIfPurchaseMade(Player player, Random random, int temperature, int forecastRanking)
         {
             int cupsPurchased;
-            int likelihoodByPrice = CalculateLikelihoodByPrice(cupPrice, random);
+            int likelihoodByPrice = CalculateLikelihoodByPrice(player.cupPrice, random);
             int likelihoodByWeather = CalculateLikelihoodByWeather(temperature, forecastRanking);
-            int likelihoodByPopularity = AddToLikelihoodIfPopular(popularity);
+            int likelihoodByPopularity = AddToLikelihoodIfPopular(player.popularity);
             int likelihoodOutOf100 = likelihoodByPrice + likelihoodByWeather;
             if (likelihoodOutOf100 < 100)
             {

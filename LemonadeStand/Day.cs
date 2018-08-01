@@ -21,21 +21,19 @@ namespace LemonadeStand
         public int numberOfPotentialCustomers;
 
 
-        private void CalculatePossibleCustomers(int forecastRanking, int temperature, Random random)
+        private void CalculatePossibleCustomers(Weather weather, Random random)
         {
             double maxPointsFromForecasts = 50;
             double pointsPerForecast = maxPointsFromForecasts/weather.forecasts.Count ; 
-            int maxRandomAmount = Convert.ToInt32(pointsPerForecast * forecastRanking);
+            int maxRandomAmount = Convert.ToInt32(pointsPerForecast * weather.forecastRanking);
             int pointsFromForecast = random.Next(0, maxRandomAmount);
-            numberOfPotentialCustomers = temperature + pointsFromForecast;
+            numberOfPotentialCustomers = weather.temperature + pointsFromForecast;
         }
 
-        public void GetPotentialCustomers(Day day, Random random)
+        public void GetPotentialCustomers(Weather weather, Random random)
         {
-            int forecastRanking = day.weather.GetForecastRanking(day.weather.forecast);
-            int temperature = day.weather.temperature;
-            day.CalculatePossibleCustomers(forecastRanking, temperature, random);
-            Console.WriteLine($"{day.numberOfPotentialCustomers} people will walk by your stand today.");
+            CalculatePossibleCustomers(weather, random);
+            Console.WriteLine($"{numberOfPotentialCustomers} people walked by your stand today.");
         }
 
         public void CreateCustomers()
@@ -48,7 +46,7 @@ namespace LemonadeStand
             }
         }
 
-       public void DetermineCupsPurchased(double cupPrice, Random random, int popularity, Day day, Player player)
+       public void GetResults(Random random, Day day, Player player)
         {
             int forecastRanking = day.weather.GetForecastRanking(day.weather.forecast);
             int temperature = day.weather.temperature;
@@ -57,23 +55,12 @@ namespace LemonadeStand
             double satisfactionPoints = 0;
             foreach (Customer customer in customers)
             {
-                int cupsWantingToPurchase = customer.DetermineIfPurchaseMade(cupPrice, random, temperature, forecastRanking, popularity);
-                int cupsActuallyPurchased;
+                int cupsWantingToPurchase = customer.DetermineIfPurchaseMade(player, random, temperature, forecastRanking);
+                int cupsActuallyPurchased = 0;
                 if (cupsWantingToPurchase > 0)
                 {
-                    cupsActuallyPurchased = 0;
-                    for (int i = 0; i < cupsWantingToPurchase; i++)
-                    {
-                        player.MakeCup();
-                        if (player.isOutOfSupplies == false)
-                        {
-                            cupsActuallyPurchased++;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
+
+                    cupsActuallyPurchased = customer.BuyLemonade(cupsWantingToPurchase, cupsActuallyPurchased, totalCupsBought, player);
                     totalCupsBought += cupsActuallyPurchased;
                     customer.CheckIfCupsWerePurchased(cupsActuallyPurchased);
                 }

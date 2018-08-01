@@ -58,9 +58,9 @@ namespace LemonadeStand
                 player1.Shop(player1, store);
                 DisplayWeather();
                 player1.DetermineRecipeAndPrice();
-                days[currentDayIndex].GetPotentialCustomers(days[currentDayIndex], random);
+                days[currentDayIndex].GetPotentialCustomers(days[currentDayIndex].weather, random);
                 days[currentDayIndex].CreateCustomers();
-                days[currentDayIndex].DetermineCupsPurchased(player1.cupPrice, random, player1.popularity, days[currentDayIndex], player1);
+                days[currentDayIndex].GetResults(random, days[currentDayIndex], player1);
                 double moneyChange = player1.ChangeTotalMoney(days[currentDayIndex].totalCupsBought);
                 Console.WriteLine($"You gained {moneyChange} dollars today and now have {player1.totalMoney} dollars total.");
                 currentDayIndex++;
