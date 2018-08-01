@@ -55,7 +55,7 @@ namespace LemonadeStand
             double satisfactionPoints = 0;
             foreach (Customer customer in customers)
             {
-                int cupsWantingToPurchase = customer.DetermineIfPurchaseMade(player, random, temperature, forecastRanking);
+                int cupsWantingToPurchase = customer.DetermineIfPurchaseMade(player, random, weather);
                 int cupsActuallyPurchased = 0;
                 if (cupsWantingToPurchase > 0)
                 {
@@ -74,22 +74,27 @@ namespace LemonadeStand
                     break;
                 }
             }
-            double overallSatisfaction;
-            if (satisfactionPoints == 0)
-            {
-                overallSatisfaction = 0;
-            }
-            else
-            {
-                overallSatisfaction = satisfactionPoints / totalCustomersPurchased;
-            }
+            int overallSatisfaction = DetermineOverallSatisfaction(satisfactionPoints);
+            
             Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
             Console.WriteLine($"{ totalCupsBought} cups total were sold.");
             Console.WriteLine($"Overall satisfaction was {overallSatisfaction}%.");
             Console.ReadLine();
             
         }
-
+        private int DetermineOverallSatisfaction(double satisfactionPoints)
+        {
+            int overallSatisfaction;
+            if (satisfactionPoints == 0)
+            {
+                overallSatisfaction = 0;
+            }
+            else
+            {
+                overallSatisfaction = Convert.ToInt32(Math.Round((satisfactionPoints / totalCustomersPurchased),2));
+            }
+            return overallSatisfaction;
+        }
 
     }
 }

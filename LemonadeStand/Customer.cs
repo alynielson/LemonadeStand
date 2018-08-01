@@ -66,11 +66,11 @@ namespace LemonadeStand
             return likelihoodByPopularity;
         }
 
-        public int DetermineIfPurchaseMade(Player player, Random random, int temperature, int forecastRanking)
+        public int DetermineIfPurchaseMade(Player player, Random random, Weather weather)
         {
             int cupsPurchased;
             int likelihoodByPrice = CalculateLikelihoodByPrice(player.cupPrice, random);
-            int likelihoodByWeather = CalculateLikelihoodByWeather(temperature, forecastRanking);
+            int likelihoodByWeather = CalculateLikelihoodByWeather(weather.temperature, weather.forecastRanking);
             int likelihoodByPopularity = AddToLikelihoodIfPopular(player.popularity);
             int likelihoodOutOf100 = likelihoodByPrice + likelihoodByWeather;
             if (likelihoodOutOf100 < 100)
