@@ -207,7 +207,6 @@ namespace LemonadeStand
 
         public void Shop(Player player, Store store)
         {
-            dailyMoneySpent = 0;
             isStillShopping = true;
             do
             {

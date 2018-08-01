@@ -54,7 +54,8 @@ namespace LemonadeStand
         {
             while (currentDayIndex < numberOfDays)
             {
-                DisplayWeather();
+                DisplayWeatherForecast();
+                player1.dailyMoneySpent = 0;
                 player1.Shop(player1, store);
                 if (player1.isGameOver == true)
                 {
@@ -85,8 +86,41 @@ namespace LemonadeStand
             Console.WriteLine($"Day {currentDay}: {days[currentDayIndex].weather.temperature} degrees, {days[currentDayIndex].weather.forecast}\n ");
         }
 
+        private void DisplayWeatherForecast()
+        {
+            bool isNumeric;
+            int numberChoice;
+            do
+            {
+                Console.WriteLine("(1) See predicted weather for today.\n(2) See predicted weather for the week.");
+                string answer = Console.ReadLine();
+                isNumeric = Int32.TryParse(answer, out numberChoice);
+                if (!isNumeric || numberChoice < 1 || numberChoice > 2)
+                {
+                    Console.WriteLine("You didn't pick a number on the list! Try again.");
+                }
+            }
+            while (!isNumeric || numberChoice < 1 || numberChoice > 3);
+            switch(numberChoice)
+            {
+                case 1:
+                    Console.WriteLine($"Today: low of {days[currentDayIndex].weather.temperatureLow}, high of {days[currentDayIndex].weather.temperatureHigh}");
+                    break;
+                case 2:
+                    for (int i=0; i < days.Count; i++)
+                    {
+                        int dayNumber = i + 1;
+                        Console.WriteLine($"Day {dayNumber}: low of {days[i].weather.temperatureLow}, high of {days[i].weather.temperatureHigh}");
+                    }
+                    break;
+            }
+        }
+          
+            
+    }
+
         
 
         
-    }
+    
 }
