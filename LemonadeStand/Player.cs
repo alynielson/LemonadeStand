@@ -36,11 +36,16 @@ namespace LemonadeStand
             
         }
 
-        public double ChangeTotalMoney(int totalCupsBought)
+        public double GetChangeInMoney(int totalCupsBought)
         {
-            double moneyChange = totalCupsBought * cupPrice;
-            totalMoney += moneyChange;
+            double moneyChange = cupPrice * totalCupsBought;
             return moneyChange;
+        }
+
+        public double ChangeTotalMoney(double moneyChange)
+        {
+            totalMoney += moneyChange;
+            return totalMoney;
         }
         public void MakePitcher()
         {
@@ -130,7 +135,7 @@ namespace LemonadeStand
             isStillShopping = true;
             do
             {
-                DisplayCurrentInventory(player);
+                DisplayCurrentInventory();
                 int shopFor = PickWhatToShopForInList();
                 GoToStoreOrLeavePage(shopFor, player, store);
             }
@@ -138,14 +143,14 @@ namespace LemonadeStand
             
         }
 
-        private void DisplayCurrentInventory(Player player)
+        private void DisplayCurrentInventory()
         {
             Console.WriteLine($"{name}'s Current Status");
             foreach (Inventory inventory in typesOfInventory)
             {
                 Console.WriteLine($"{inventory.name}: {inventory.quantity}");
             }
-            Console.WriteLine($"Money: ${player.totalMoney}");
+            Console.WriteLine($"Money: ${totalMoney}");
         }
 
         public void DetermineRecipeAndPrice()

@@ -11,14 +11,16 @@ namespace LemonadeStand
         public Weather weather;
         private List<Customer> customers;
         public int totalCupsBought;
-        public int totalCustomersPurchased;
+        private int totalCustomersPurchased;
+        private int numberOfPotentialCustomers;
+        private int overallSatisfaction;
 
         public Day(Random random)
         {
             weather = new Weather(random);
         }
         
-        public int numberOfPotentialCustomers;
+        
 
 
         private void CalculatePossibleCustomers(Weather weather, Random random)
@@ -30,7 +32,7 @@ namespace LemonadeStand
             numberOfPotentialCustomers = weather.temperature + pointsFromForecast;
         }
 
-        public void GetPotentialCustomers(Weather weather, Random random)
+        public void GetPotentialCustomers(Random random)
         {
             CalculatePossibleCustomers(weather, random);
             Console.WriteLine($"{numberOfPotentialCustomers} people walked by your stand today.");
@@ -46,10 +48,9 @@ namespace LemonadeStand
             }
         }
 
-       public void GetResults(Random random, Day day, Player player)
+       public void GetResults(Random random, Player player)
         {
-            int forecastRanking = day.weather.GetForecastRanking(day.weather.forecast);
-            int temperature = day.weather.temperature;
+            overallSatisfaction = 0;
             totalCupsBought = 0;
             totalCustomersPurchased = 0;
             double satisfactionPoints = 0;
@@ -74,14 +75,9 @@ namespace LemonadeStand
                     break;
                 }
             }
-            int overallSatisfaction = DetermineOverallSatisfaction(satisfactionPoints);
-            
-            Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
-            Console.WriteLine($"{ totalCupsBought} cups total were sold.");
-            Console.WriteLine($"Overall satisfaction was {overallSatisfaction}%.");
-            Console.ReadLine();
-            
+            overallSatisfaction = DetermineOverallSatisfaction(satisfactionPoints);
         }
+
         private int DetermineOverallSatisfaction(double satisfactionPoints)
         {
             int overallSatisfaction;
@@ -94,6 +90,14 @@ namespace LemonadeStand
                 overallSatisfaction = Convert.ToInt32(Math.Round((satisfactionPoints / totalCustomersPurchased),2));
             }
             return overallSatisfaction;
+        }
+
+        public void DisplayResults()
+        {
+            Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
+            Console.WriteLine($"{ totalCupsBought} cups total were sold.");
+            Console.WriteLine($"Overall satisfaction was {overallSatisfaction}%.");
+            Console.ReadLine();
         }
 
     }

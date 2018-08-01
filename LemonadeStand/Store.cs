@@ -69,7 +69,7 @@ namespace LemonadeStand
             return numberChoice;
         }
 
-        private void purchaseItems(int numberChoice, Inventory itemToShopFor, Player player)
+        private void purchaseItems(int numberChoice, Inventory itemToShopFor,Player player)
         {
             switch (numberChoice)
             {
