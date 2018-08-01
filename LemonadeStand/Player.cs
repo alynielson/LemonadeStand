@@ -62,6 +62,7 @@ namespace LemonadeStand
 
         public void DeclareBankruptcy()
         {
+            Console.Clear();
             Console.WriteLine($"{name}, you've gone bankrupt! Your game is over!");
             totalMoney = 0;
             isGameOver = true;
