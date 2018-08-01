@@ -178,7 +178,7 @@ namespace LemonadeStand
             int maxNumberChoice = typesOfInventory.Count + 1;
             do
             {
-                Console.WriteLine($"{name}, what would you like to buy more of? Enter a number.\n1. Cups\n2. Lemons\n3. Sugar\n4. Ice\n5. I'm done shopping!");
+                Console.WriteLine($"{name}, what would you like to buy more of? Enter a number.\n1. Cups\n2. Lemons\n3. Sugar\n4. Ice\n5. Back to menu");
                 string answer = Console.ReadLine();
                 isNumeric = Int32.TryParse(answer, out numberChoice);
                 if (isNumeric == false || numberChoice < 1 || numberChoice > maxNumberChoice)
@@ -250,7 +250,7 @@ namespace LemonadeStand
                 Console.WriteLine($"2. Lemons per pitcher: {lemonsPerPitcher} lemons");
                 Console.WriteLine($"3. Sugar per pitcher: {sugarPerPitcher} cups");
                 Console.WriteLine($"4. Ice per cup: {icePerCup} cubes");
-                Console.WriteLine($"5. Start selling!");
+                Console.WriteLine($"5. Back to main menu");
                 string answer = Console.ReadLine();
                 isNumeric = Int32.TryParse(answer, out numberChoice);
                 if (!isNumeric || numberChoice < 1 || numberChoice > 5)

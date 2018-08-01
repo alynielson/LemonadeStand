@@ -23,7 +23,7 @@ namespace LemonadeStand
         
 
 
-        private void CalculatePossibleCustomers(Weather weather, Random random)
+        public void CalculatePossibleCustomers(Weather weather, Random random)
         {
             double maxPointsFromForecasts = 50;
             double pointsPerForecast = maxPointsFromForecasts/weather.forecasts.Count ; 
@@ -32,11 +32,7 @@ namespace LemonadeStand
             numberOfPotentialCustomers = weather.temperature + pointsFromForecast;
         }
 
-        public void GetPotentialCustomers(Random random)
-        {
-            CalculatePossibleCustomers(weather, random);
-            Console.WriteLine($"{numberOfPotentialCustomers} people walked by your stand today.");
-        }
+       
 
         public void CreateCustomers()
         {

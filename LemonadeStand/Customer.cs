@@ -9,10 +9,9 @@ namespace LemonadeStand
     class Customer
     {
         
-        int satisfactionByPrice;
-        int satisfactionByRecipe;
+        
         public bool didPurchaseCups;
-        int satisfaction;
+        
 
         public int BuyLemonade(int cupsWantingToPurchase, int cupsActuallyPurchased, int totalCupsBought, Player player)
         {
