@@ -132,14 +132,14 @@ namespace LemonadeStand
             switch(numberChoice)
             {
                 case 1:
-                    Console.WriteLine($"Today: low of {days[currentDayIndex].weather.temperatureLow}, high of {days[currentDayIndex].weather.temperatureHigh}");
+                    Console.WriteLine($"Today: low of {days[currentDayIndex].weather.temperatureLow}, high of {days[currentDayIndex].weather.temperatureHigh}, possibly {days[currentDayIndex].weather.forecastPossibility}");
                     UserInterface.GoBackToMenu();
                     break;
                 case 2:
                     for (int i=0; i < days.Count; i++)
                     {
                         int dayNumber = i + 1;
-                        Console.WriteLine($"Day {dayNumber}: low of {days[i].weather.temperatureLow}, high of {days[i].weather.temperatureHigh}");
+                        Console.WriteLine($"Day {dayNumber}: low of {days[i].weather.temperatureLow}, high of {days[i].weather.temperatureHigh}, {days[i].weather.forecastPossibility}");
                     }
                     UserInterface.GoBackToMenu();
                     break;

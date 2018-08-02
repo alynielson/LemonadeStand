@@ -14,14 +14,15 @@ namespace LemonadeStand
         public int forecastRanking;
         public int temperatureLow;
         public int temperatureHigh;
+        public string forecastPossibility;
 
         public Weather(Random random)
         {
             forecasts = new List<string> { "rainy", "cloudy", "hazy", "clear and sunny" };
-            forecastRanking = GetForecastRanking(forecast);
             GetWeatherPrediction(random);
             temperature = GetTemperature(random);
             forecast = GetForecast(random);
+            forecastRanking = GetForecastRanking(forecast);
         }
 
         private int GetPredictedTemperatureLow(Random random)
@@ -42,11 +43,20 @@ namespace LemonadeStand
             return temperatureHigh;
         }
 
+        private string GetPredictedForecast(Random random)
+        {
+            int forecastPossibilityIndex = random.Next(0, 4);
+            forecastPossibility = forecasts[forecastPossibilityIndex];
+            return forecastPossibility;
+        }
+
         private void GetWeatherPrediction(Random random)
         {
             int temperatureLow = GetPredictedTemperatureLow(random);
             int temperatureRange = GetPredictedTemperatureRange(random, temperatureLow);
             int temperatureHigh = GetPredictedTemperatureHigh(random, temperatureLow, temperatureRange);
+            string forecastPossibility = GetPredictedForecast(random);
+            
         }
 
         private int GetTemperature(Random random)
@@ -57,7 +67,25 @@ namespace LemonadeStand
 
         private string GetForecast(Random random)
         {
-            int forecastIndex = random.Next(0, forecasts.Count);
+            int potentialForecast = forecasts.IndexOf(forecastPossibility);
+            int min;
+            int max;
+            if (potentialForecast < 1)
+            {
+                min = potentialForecast;
+                max = potentialForecast + 2;
+            }
+            else if (potentialForecast > (forecasts.Count - 2))
+            {
+                min = potentialForecast - 1;
+                max = potentialForecast + 1;
+            }
+            else
+            {
+                min = potentialForecast - 1;
+                max = potentialForecast + 2;
+            }
+            int forecastIndex = random.Next(min, max);
             forecast = forecasts[forecastIndex];
             return forecast;
         }
