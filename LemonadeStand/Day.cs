@@ -111,6 +111,7 @@ namespace LemonadeStand
             Console.WriteLine($"{totalCustomersPurchased} customers made a purchase out of {numberOfPotentialCustomers} possible.");
             Console.WriteLine($"{ totalCupsBought} cups total were sold.");
             Console.WriteLine($"Overall satisfaction was {overallSatisfaction}%.");
+            Console.WriteLine("Press Enter to continue.");
             Console.ReadLine();
         }
 

@@ -94,6 +94,7 @@ namespace LemonadeStand
                 days[currentDayIndex].GetResults(random, player1);
             }
             days[currentDayIndex].DisplayResults();
+            player1.MeltIce();
             player1.GetPopularity(days[currentDayIndex], numberOfDays);
             player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
             

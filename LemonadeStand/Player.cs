@@ -233,6 +233,15 @@ namespace LemonadeStand
             while (isStillShopping == true);
         }
 
+        public void MeltIce()
+        {
+            if (ice.quantity > 0)
+            {
+                Console.WriteLine("The rest of your ice melted!");
+                ice.quantity = 0;
+            }
+        }
+
         private int DisplayRecipeAndPrice()
         {
             bool isNumeric;
