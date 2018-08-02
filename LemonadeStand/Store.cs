@@ -8,16 +8,16 @@ namespace LemonadeStand
 {
     class Store
     {
-        double discountFactor1 = 0.9;
-        double discountFactor2 = 0.8;
-        int qtyIncreaseFactor = 2;
-        double basePrice;
-        int baseQty;
-        int qty2;
-        int qty3;
-        double priceForQty1;
-        double priceForQty2;
-        double priceForQty3;
+        private double discountFactor1 = 0.9;
+        private double discountFactor2 = 0.8;
+        private int qtyIncreaseFactor = 2;
+        private double basePrice;
+        private int baseQty;
+        private int qty2;
+        private int qty3;
+        private double priceForQty1;
+        private double priceForQty2;
+        private double priceForQty3;
 
         private void CalculatePricesFor(Inventory itemToShopFor)
         {
@@ -51,73 +51,75 @@ namespace LemonadeStand
         private int DisplayPrices(Inventory itemToShopFor)
         {
             int numberChoice;
-            bool isNumeric;
+            int listMin = 1;
+            int listMax = 4;
             do
             {
-                Console.Clear();
-                Console.WriteLine($"How many {itemToShopFor.name} would you like to buy? Enter a number.");
-                Console.WriteLine($"1. {baseQty} {itemToShopFor.name} for {priceForQty1}.");
-                Console.WriteLine($"2. {qty2} {itemToShopFor.name} for {priceForQty2}.");
-                Console.WriteLine($"3. {qty3} {itemToShopFor.name} for {priceForQty3}.");
-                string answer = Console.ReadLine();
-                isNumeric = Int32.TryParse(answer, out numberChoice);
-                if (!isNumeric || numberChoice < 1 || numberChoice > 3)
-                {
-                    Console.WriteLine("You didn't pick a number on the list! Press Enter to try again.");
-                    Console.ReadLine();
-                }
+                UserInterface.DisplayStorePrices(itemToShopFor.name, baseQty, priceForQty1, qty2, priceForQty2, qty3, priceForQty3);
+                numberChoice = UserInterface.ValidateNumberResponse();
             }
-            while (!isNumeric || numberChoice < 1 || numberChoice > 3);
+            while (numberChoice < listMin || numberChoice > listMax);
             return numberChoice;
         }
 
-        private void purchaseItems(int numberChoice, Inventory itemToShopFor,Player player)
+        private double DeterminePriceToUse(int numberChoice)
         {
-            bool isShopperBankrupt;
+            double priceToUse;
             switch (numberChoice)
             {
                 case 1:
-                    isShopperBankrupt = player.CheckIfBankrupt(priceForQty1);
-                    if (isShopperBankrupt == false)
-                    {
-                        itemToShopFor.quantity += baseQty;
-                        player.totalMoney -= priceForQty1;
-                        player.dailyMoneySpent += priceForQty1;
-                    }
-                    else
-                    {
-                        player.isStillShopping = false;
-                        player.DeclareBankruptcy();
-                    }
-                    break;
+                    priceToUse = priceForQty1;
+                    return priceToUse;
                 case 2:
-                    isShopperBankrupt = player.CheckIfBankrupt(priceForQty2);
-                    if (isShopperBankrupt == false)
-                    {
-                        itemToShopFor.quantity += qty2;
-                        player.totalMoney -= priceForQty2;
-                        player.dailyMoneySpent += priceForQty2;
-                    }
-                    else
-                    {
-                        player.isStillShopping = false;
-                        player.DeclareBankruptcy();
-                    }
-                    break;
+                    priceToUse = priceForQty2;
+                    return priceToUse;
                 case 3:
-                    isShopperBankrupt = player.CheckIfBankrupt(priceForQty3);
-                    if (isShopperBankrupt == false) 
-                    {
-                        itemToShopFor.quantity += qty3;
-                        player.totalMoney -= priceForQty3;
-                        player.dailyMoneySpent += priceForQty3;
-                    }
-                    else
-                    {
-                        player.isStillShopping = false;
-                        player.DeclareBankruptcy();
-                    }
-                    break;
+                    priceToUse = priceForQty3;
+                    return priceToUse;
+                default:
+                    return priceToUse = 0;
+            }
+        }
+
+        private int DetermineQuantityToUse(int numberChoice)
+        {
+            int qtyToUse;
+            switch (numberChoice)
+            {
+                case 1:
+                    qtyToUse = baseQty;
+                    return qtyToUse;
+                case 2:
+                    qtyToUse = qty2;
+                    return qtyToUse;
+                case 3:
+                    qtyToUse = qty3;
+                    return qtyToUse;
+                default:
+                    return qtyToUse = 0;
+            }
+        }
+
+        private void DoTransaction(Inventory itemToShopFor, Player player, int qtyToUse, double priceToUse)
+        {
+            itemToShopFor.quantity += qtyToUse;
+            player.totalMoney -= priceToUse;
+            player.dailyMoneySpent += priceToUse;
+        } 
+
+        private void purchaseItems(int numberChoice, Inventory itemToShopFor,Player player)
+        {
+            double priceToUse = DeterminePriceToUse(numberChoice);
+            int qtyToUse = DetermineQuantityToUse(numberChoice);
+            bool isShopperBankrupt = player.CheckIfBankrupt(priceToUse);
+            if (isShopperBankrupt == false)
+            {
+                DoTransaction(itemToShopFor, player, qtyToUse, priceToUse);
+            }
+            else
+            {
+                player.isStillShopping = false;
+                player.DeclareBankruptcy();
             }
             if (player.isGameOver == false)
             {
