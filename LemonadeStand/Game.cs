@@ -23,15 +23,14 @@ namespace LemonadeStand
 
         private void GetNumberOfDays()
         {
-            Console.WriteLine("How many days will you be running your lemonade stand for? Enter a number. Must be at least 7.");
-            string response = Console.ReadLine();
-            numberOfDays = 0;
-            bool isNumericAnswer = Int32.TryParse(response, out numberOfDays);
-            if (!isNumericAnswer || numberOfDays < 7 )
+            int minDays = 7;
+            do
             {
-                Console.WriteLine("You didn't enter a number that is at least 7! Try again.");
-                GetNumberOfDays();
+                Console.WriteLine("How many days will you be running your lemonade stand for? Enter a number. Must be at least 7.");
+                numberOfDays = UserInterface.ValidateNumberResponse();
             }
+            while (numberOfDays < minDays);
+            
         }
 
         public void SetUpGame()
@@ -75,24 +74,29 @@ namespace LemonadeStand
                         }
                         break;
                     case 4:
-                        DisplayWeather();
-                        bool hasCustomers = days[currentDayIndex].CheckForNoCustomers();
-                        if (hasCustomers == true)
-                        {
-                            days[currentDayIndex].GetResults(random, player1);
-                        }
-                        days[currentDayIndex].DisplayResults();
-                        player1.GetPopularity(days[currentDayIndex], numberOfDays);
-                        player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
-                        UserInterface.GoBackToMenu();
-                        currentDayIndex++;
-                        player1.dailyMoneySpent = 0;
+                        MakeDayHappen();
                         break;
                 }  
             }
-            player1.DisplayEndResults();
+            UserInterface.DisplayEndResults(player1.name, player1.totalMoney, player1.totalMoneySpent, player1.totalMoneyGained,player1.popularity);
             Console.ReadLine();
             Console.Clear();
+        }
+
+        private void MakeDayHappen()
+        {
+            DisplayWeather();
+            bool hasCustomers = days[currentDayIndex].CheckForNoCustomers();
+            if (hasCustomers == true)
+            {
+                days[currentDayIndex].GetResults(random, player1);
+            }
+            days[currentDayIndex].DisplayResults();
+            player1.GetPopularity(days[currentDayIndex], numberOfDays);
+            player1.DisplayMoneyResults(days[currentDayIndex].totalCupsBought);
+            UserInterface.GoBackToMenu();
+            currentDayIndex++;
+            player1.dailyMoneySpent = 0;
         }
 
         private void DisplayWeather()

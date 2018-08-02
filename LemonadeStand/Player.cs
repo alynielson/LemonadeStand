@@ -94,13 +94,7 @@ namespace LemonadeStand
             DetermineTotalChange(totalCupsBought);
         }
 
-        public void DisplayEndResults()
-        {
-            Console.WriteLine($"{name}, you end the game with ${totalMoney}.");
-            Console.WriteLine($"You spent ${totalMoneySpent} and made ${totalMoneyGained} in sales.");
-            Console.WriteLine($"Your popularity was ${popularity}%.");
-            Console.ReadLine();
-        }
+        
 
         
         public void GetPopularity(Day day, int numberOfDays)
