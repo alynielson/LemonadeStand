@@ -104,6 +104,7 @@ namespace LemonadeStand
             UserInterface.GoBackToMenu();
             currentDayIndex++;
             player1.dailyMoneySpent = 0;
+            player1.isOutOfSupplies = false;
         }
 
         private void DisplayWeather()

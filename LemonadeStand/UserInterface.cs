@@ -61,7 +61,7 @@ namespace LemonadeStand
         {
             Console.WriteLine($"{name}, you end the game with ${totalMoney}.");
             Console.WriteLine($"You spent ${totalMoneySpent} and made ${totalMoneyGained} in sales.");
-            Console.WriteLine($"Your popularity was ${popularity}%.");
+            Console.WriteLine($"Your popularity was {popularity}%.");
             Console.ReadLine();
         }
 
