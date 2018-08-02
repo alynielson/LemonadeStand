@@ -45,11 +45,11 @@ namespace LemonadeStand
                 Console.WriteLine("4. Back to main store page.");
         }
 
-        public static int ValidateNumberResponse()
+        public static int ValidateNumberResponse(int min, int max)
         {
             string answer = Console.ReadLine();
             bool isNumeric = Int32.TryParse(answer, out int numberChoice);
-            if (numberChoice == 0)
+            if (numberChoice == 0 || numberChoice < min || numberChoice > max)
             {
                 Console.WriteLine("You didn't enter a valid number! Press Enter to try again.");
                 Console.ReadLine();

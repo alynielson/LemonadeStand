@@ -56,7 +56,7 @@ namespace LemonadeStand
             do
             {
                 UserInterface.DisplayStorePrices(itemToShopFor.name, baseQty, priceForQty1, qty2, priceForQty2, qty3, priceForQty3);
-                numberChoice = UserInterface.ValidateNumberResponse();
+                numberChoice = UserInterface.ValidateNumberResponse(listMin, listMax);
             }
             while (numberChoice < listMin || numberChoice > listMax);
             return numberChoice;
